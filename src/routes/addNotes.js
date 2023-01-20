@@ -1,26 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
+const fs = require("fs");
 
-const notes = [];
+// const notes = [];
 
-
-router.get('/leave-notes', (req, res, next) => {
+router.get("/leave-notes", (req, res, next) => {
   res.render("leave-notes", {
     url: "/leave-notes",
-  })
+  });
 });
 
-router.post('/notes', (req, res, next) => {
-  notes.push({ Note: req.body.notes});
+router.post("/notes", (req, res, next) => {
+  const notes = req.body.notes + `\n`;
+
+  fs.appendFile("text.txt", notes, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+
+  // notes.push({ Note: req.body.notes});
   res.redirect("/home");
 });
 
-
-// router.get('/home', (req, res, next) => {
-//   // res.sendFile(path.join(rootDir, 'views', 'home.html'));
-//   res.render("home");
-// });
-
 module.exports = router;
-exports.notes = notes;

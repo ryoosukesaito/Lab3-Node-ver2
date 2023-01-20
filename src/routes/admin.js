@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-// const user = [];
-
 router.get("/", (req, res, next) => {
   res.redirect("/input");
 });
@@ -31,5 +29,12 @@ router.post("/login", (req, res, next) => {
   });
 });
 
+router.get("/home", (req, res, next) => {
+
+  res.render("home", {
+    url: "/home",
+    username: "user"
+  });
+});
 
 module.exports = router;

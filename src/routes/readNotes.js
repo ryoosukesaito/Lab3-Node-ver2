@@ -1,16 +1,25 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
+const fs = require("fs");
 
-const notesData = require('./addNotes');
+// const notesData = require('./addNotes');
 
-router.get('/read-notes', (req, res, next) => {
-  console.log(notesData.notes);
-  // res.render(path.join(__dirname, "../views/read-notes.ejs"));
-  res.render("read-notes", {
-    Notes: notesData.notes,
-    url: "/read-notes"
+router.get("/read-notes", (req, res, next) => {
+  
+  fs.readFile("text.txt", "utf-8", (err, data) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    let notesData = [data];
+    // notesData.push(data);
+    console.log(`${notesData}`);
+    res.render("read-notes", {
+      Notes: notesData,
+      url: "/read-notes",
+    });
   });
-})
+});
+
 
 module.exports = router;
